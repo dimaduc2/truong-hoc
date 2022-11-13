@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Toast, ToastContainer, Button, } from 'react-bootstrap';
 function Home({mauSang}) {
-  // fidfhidfuhsifhg
+  
   const [hopBanDau, suaHopBanDau] = useState('');
   const hienChu = (chuMoi) => {
    // alert(chu)
