@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Toast, ToastContainer, Button, Navbar, Container, Nav, Form,} from 'react-bootstrap';
 import { BsFillMoonFill, BsFillSunFill} from 'react-icons/bs';
 import { Routes, Route, Outlet, Link } from "react-router-dom";
+import axios from 'axios';
 import Home from './Home.js'
 import HocSinh from './HocSinh.js'
 import GiaoVien from './GiaoVien.js'
@@ -45,15 +46,24 @@ function Menu() {
   );
 }
 
-
 function About() {
+  // axios.get('http://localhost:5500/About/')
+  // .then(res => {
+  //   // alert(res.data)
+  // })
+  alert('ABCDEF')
   return (
     <div>
       <h2>Đây là Webside thường học</h2>
     </div>
   );
 }
+
 function KhongTimThay() {
+  axios.get('http://localhost:5500/KhongTimThay/')
+  .then(res => {
+    // alert(res.data)
+  })
   return (
     <div>
       <h2>Không tìm thấy địa chỉ này!</h2>
@@ -66,8 +76,6 @@ function KhongTimThay() {
 
 
 function App() {
-  
-  
 
   const [mauSang, thayDoiMauSang] = useState(true);
   // Cách 1
@@ -113,11 +121,6 @@ function App() {
               <Nav.Link as={Link} style={{color: chuMenuDuocChon==='About' ?'Red' :'Gray'}} onClick={() => suaChuMenuDuocChon('About')} to="/About">About</Nav.Link>
               {/* <Nav.Link href="About" onClick={() => suaHienTheoMenu('About')}>About</Nav.Link> */}
               
-              
-              
-              <Nav.Link><Link to='a'>ABC</Link></Nav.Link>
-
-
             </Nav>
           </Navbar.Collapse>
           <Form>
@@ -140,7 +143,7 @@ function App() {
       <Routes>
         <Route path="/" >
           <Route index element={<Home mauSang={mauSang} />} />
-          <Route path="HocSinh" element={<HocSinh />} />
+          <Route path="HocSinh" element={<HocSinh mauSang={mauSang} />} />
           <Route path="GiaoVien" element={<GiaoVien />} />
           <Route path="BaiHoc" element={<BaiHoc />} />
           <Route path="About" element={<About />} />
