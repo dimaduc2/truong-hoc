@@ -1,50 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
 import React, { useState } from 'react';
-import { Toast, ToastContainer, Button, Navbar, Container, Nav, Form,} from 'react-bootstrap';
-import { BsFillMoonFill, BsFillSunFill} from 'react-icons/bs';
+import { Navbar, Container, Nav, Form } from 'react-bootstrap';
+import { BsFillMoonFill, BsFillSunFill } from 'react-icons/bs';
 import { Routes, Route, Outlet, Link } from "react-router-dom";
 import axios from 'axios';
 import Home from './Home.js'
 import HocSinh from './HocSinh.js'
 import GiaoVien from './GiaoVien.js'
-import BaiHoc from './BaiHoc.js'
+import Lop from './Lop.js'
+import TietHoc from './TietHoc.js'
+import QuanLy from './QuanLy.js'
+import PhuHuynh from './PhuHuynh.js'
 
-
-function Menu() {
-  return (
-    <div>
-      {/* A "layout route" is a good place to put markup you want to
-          share across all the pages on your site, like navigation. */}
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/HocSinh">HocSinh</Link>
-          </li>
-          <li>
-            <Link to="/GiaoVien">GiaoVien</Link>
-          </li>
-          <li>
-            <Link to="/BaiHoc">BaiHoc</Link>
-          </li>
-          <li>
-            <Link to="/About">About</Link>
-          </li>
-        </ul>
-      </nav>
-
-      <hr />
-
-      {/* An <Outlet> renders whatever child route is currently active,
-          so you can think about this <Outlet> as a placeholder for
-          the child routes we defined above. */}
-      <Outlet />
-    </div>
-  );
-}
 
 function About() {
   // axios.get('http://localhost:5500/About/')
@@ -93,7 +61,7 @@ function App() {
   const [chuMenuDuocChon, suaChuMenuDuocChon] = useState();
 
   return (
-    <div className="App" style={{height:'100vh', background: mauSang ?'black' :'white', color: mauSang ?'white' :'black'}}>
+    <div className="App" style={{height:'300vh', background: mauSang ?'black' :'white', color: mauSang ?'white' :'black'}}>
       {/* Cách 1 */}
       <Navbar variant={mauSang ?'light' :'dark'} bg={mauSang ?'light' :'dark'} style={{color: mauSang ?'blue' :'yellow'}} expand="lg" sticky="top">
       {/* <Navbar variant="dark" bg={mauSang ?'dark' :'light'} style={{color: mauSang ?'yellow' :'blue'}} expand="lg" fixed="top"> */}
@@ -102,7 +70,8 @@ function App() {
         <Container fluid>
           <Navbar.Brand as={Link} 
           // style={{color: mauSang ?'yellow' :'blue'}} 
-          onClick={() => suaChuMenuDuocChon('Home')} to="/">React-Bootstrap</Navbar.Brand>
+          // onClick={() => suaChuMenuDuocChon('Home')} to="/">React-Bootstrap</Navbar.Brand>
+          onClick={() => suaChuMenuDuocChon('Home')} to="/">Home</Navbar.Brand>
           {/* <Navbar.Brand href="#home" style={{color: mauSang ?'yellow' :'blue'}} onClick={() => suaHienTheoMenu('Home')}>React-Bootstrap</Navbar.Brand> */}
           <Navbar.Toggle aria-controls="navbar-dark-example" />
           <Navbar.Collapse id="navbar-dark-example">
@@ -115,8 +84,18 @@ function App() {
               <Nav.Link as={Link} style={{color: chuMenuDuocChon==='GiaoVien' ?'Red' :'Gray'}} onClick={() => suaChuMenuDuocChon('GiaoVien')} to="/GiaoVien">Giáo viên</Nav.Link>
               {/* <Nav.Link href="GiaoVien" onClick={() => suaHienTheoMenu('GiaoVien')}>Giáo viên</Nav.Link> */}
 
-              <Nav.Link as={Link} style={{color: chuMenuDuocChon==='BaiHoc' ?'Red' :'Gray'}} onClick={() => suaChuMenuDuocChon('BaiHoc')} to="/BaiHoc">Lớp học</Nav.Link>
-              {/* <Nav.Link href="BaiHoc" onClick={() => suaHienTheoMenu('BaiHoc')}>Lớp học</Nav.Link> */}
+              <Nav.Link as={Link} style={{color: chuMenuDuocChon==='Lop' ?'Red' :'Gray'}} onClick={() => suaChuMenuDuocChon('Lop')} to="/Lop">Lớp học</Nav.Link>
+              {/* <Nav.Link href="Lop" onClick={() => suaHienTheoMenu('Lop')}>Lớp học</Nav.Link> */}
+
+              <Nav.Link as={Link} style={{color: chuMenuDuocChon==='TietHoc' ?'Red' :'Gray'}} onClick={() => suaChuMenuDuocChon('TietHoc')} to="/TietHoc">Tiết học</Nav.Link>
+              {/* <Nav.Link href="TietHoc" onClick={() => suaHienTheoMenu('TietHoc')}>Lớp học</Nav.Link> */}
+              
+              <Nav.Link as={Link} style={{color: chuMenuDuocChon==='QuanLy' ?'Red' :'Gray'}} onClick={() => suaChuMenuDuocChon('QuanLy')} to="/QuanLy">Quản lý</Nav.Link>
+              {/* <Nav.Link href="QuanLy" onClick={() => suaHienTheoMenu('QuanLy')}>Lớp học</Nav.Link> */}
+              
+
+              <Nav.Link as={Link} style={{color: chuMenuDuocChon==='PhuHuynh' ?'Red' :'Gray'}} onClick={() => suaChuMenuDuocChon('PhuHuynh')} to="/PhuHuynh">Phụ Huynh</Nav.Link>
+              {/* <Nav.Link href="PhuHuynh" onClick={() => suaHienTheoMenu('PhuHuynh')}>Lớp học</Nav.Link> */}
 
               <Nav.Link as={Link} style={{color: chuMenuDuocChon==='About' ?'Red' :'Gray'}} onClick={() => suaChuMenuDuocChon('About')} to="/About">About</Nav.Link>
               {/* <Nav.Link href="About" onClick={() => suaHienTheoMenu('About')}>About</Nav.Link> */}
@@ -144,8 +123,11 @@ function App() {
         <Route path="/" >
           <Route index element={<Home mauSang={mauSang} />} />
           <Route path="HocSinh" element={<HocSinh mauSang={mauSang} />} />
-          <Route path="GiaoVien" element={<GiaoVien />} />
-          <Route path="BaiHoc" element={<BaiHoc />} />
+          <Route path="GiaoVien" element={<GiaoVien mauSang={mauSang} />} />
+          <Route path="Lop" element={<Lop mauSang={mauSang} />} />
+          <Route path="TietHoc" element={<TietHoc mauSang={mauSang} />} />
+          <Route path="QuanLy" element={<QuanLy mauSang={mauSang} />} />
+          <Route path="PhuHuynh" element={<PhuHuynh />} />
           <Route path="About" element={<About />} />
           <Route path="*" element={<KhongTimThay />} />
         </Route>

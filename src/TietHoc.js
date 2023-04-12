@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table } from 'react-bootstrap';
+import { Table, Offcanvas, Accordion } from 'react-bootstrap';
 
-function GiaoVien({mauSang}) {
+function TietHoc({mauSang}) {
   const [hopLoi, suaHopLoi] = useState(null);
   const [coKetQuaChua, suaCoKetQuaChua] = useState(false);
   const [items, setItems] = useState([]);
 
   const [cauTraLoiServer, suaCauTraLoiServer] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:5500/GiaoVien/')
+    axios.get('http://localhost:5500/TietHoc/')
     .then(res => {
       // alert(res.data)
-      suaCauTraLoiServer(res.data.danhSachGV);
+      suaCauTraLoiServer(res.data.danhSachTH);
     })
     .then(
       (result) => {
@@ -25,40 +25,66 @@ function GiaoVien({mauSang}) {
       }
     )
   },[]);
+
+  // const [show123, suaShow] = useState(false);
+  const [timTen, suaTimTen] = useState('');
+  const timHS = (tenMoiHS) => {
+    // suaShow(true);
+    alert(tenMoiHS)
+    suaTimTen(tenMoiHS)
+  };
+  // const handleClose = () => {
+  //   suaShow(false);
+  // }
+
   return (
     <div>
+      {/* <Offcanvas show={show123} 
+      onHide={handleClose}
+      >
+        <Offcanvas.Header closeButton={handleClose}>
+          <Offcanvas.Title>{timTen}</Offcanvas.Title>
+        </Offcanvas.Header>
+        <Offcanvas.Body>
+        {timTen}
+        </Offcanvas.Body>
+      </Offcanvas> */}
       {hopLoi
         ?<div>Error: Không kết nối với Server ({hopLoi.message})</div>
         :<Table style={{color: mauSang ?'white' :'black'}} striped={mauSang ?false :true} bordered>
           <thead>
             <tr>
-              <th>Tên</th>
-              <th>Giới Tính</th>
-              <th>Chủ Nhiệm lớp</th>
               <th>Tiết học</th>
+              <th>Giáo viên</th>
+              <th>Số học sinh</th>
             </tr>
           </thead>
           <tbody>
             {cauTraLoiServer.map((moiNguoi, index)=>
               <tr>
-                <td>{moiNguoi.tengiaoVien}</td>
-                <td>{(moiNguoi.gioiTinh===1?'Male':'Female')}</td>
-                <td>{moiNguoi.quanlylop}</td>
                 <td>{moiNguoi.tenTietHoc}</td>
+                <td>{moiNguoi.tengiaovien}</td>
+                <td 
+                // onClick={() => timHS(moiNguoi.tongSoHS)}
+                >
+                  <Accordion>
+                    <Accordion.Item eventKey={index}>
+                      <Accordion.Header>{moiNguoi.tongSoHS}</Accordion.Header>
+                      <Accordion.Body>
+                        {moiNguoi.tenTatCaHS}
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </td>
               </tr>
             )}
           </tbody>
         </Table>
-      // <div>{cauTraLoiServer.map((moiNguoi, index)=>
-      //     <div>
-      //       {'Tên: '+moiNguoi.tengiaoVien+' (Giới Tính: '+(moiNguoi.gioiTinh===1?'Male':'Female')+') | Quản lý lớp: '+(moiNguoi.quanlylop===null ?'Không có lớp' :moiNguoi.quanlylop)}
-      //     </div>
-      //   )}</div>
       }
       {!coKetQuaChua
           ?<div>Loading...</div>
           :null
-      }    
+      }  
     </div>
   );
 
@@ -70,10 +96,10 @@ function GiaoVien({mauSang}) {
   //   return (
   //     <div>
   //       {cauTraLoiServer}
-  //       {/* Đây là giáo viên */}
+  //       {/* Đây là bài học */}
   //     </div>
   //   );
   // }
 }
 
-export default GiaoVien;
+export default TietHoc;

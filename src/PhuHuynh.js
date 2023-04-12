@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Table } from 'react-bootstrap';
 
-function BaiHoc() {
+function PhuHuynh({mauSang}) {
   const [hopLoi, suaHopLoi] = useState(null);
   const [coKetQuaChua, suaCoKetQuaChua] = useState(false);
   const [items, setItems] = useState([]);
 
-  const [cauTraLoiServer, suaCauTraLoiServer] = useState('');
+  const [cauTraLoiServer, suaCauTraLoiServer] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:5500/Baihoc/')
+    axios.get('http://localhost:5500/PhuHuynh/')
     .then(res => {
       // alert(res.data)
-      suaCauTraLoiServer(res.data);
+      suaCauTraLoiServer(res.data.danhSachPH);
     })
     .then(
       (result) => {
@@ -28,12 +29,16 @@ function BaiHoc() {
     <div>
       {hopLoi
         ?<div>Error: Không kết nối với Server ({hopLoi.message})</div>
-        :<div>{cauTraLoiServer}</div>
+        :<div>{cauTraLoiServer.map((moiNguoi, index)=>
+          <div>
+            {'Tên: '+moiNguoi.ten}
+          </div>
+        )}</div>
       }
       {!coKetQuaChua
           ?<div>Loading...</div>
           :null
-      }  
+      }
     </div>
   );
 
@@ -45,10 +50,11 @@ function BaiHoc() {
   //   return (
   //     <div>
   //       {cauTraLoiServer}
-  //       {/* Đây là bài học */}
+  //       {mauSang ?'A':'B'}
+  //       {/* Đây là học sinh */}
   //     </div>
   //   );
   // }
 }
 
-export default BaiHoc;
+export default PhuHuynh;
